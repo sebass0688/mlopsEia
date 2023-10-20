@@ -17,7 +17,11 @@ def predict(colour, age, sex, employed, citizen, checks):
     data = pd.DataFrame([[colour, age, sex, employed, citizen, checks]])
     data.columns = ['colour', 'age', 'sex', 'employed', 'citizen', 'checks']
     predictions = predict_model(model, data=data) 
-    return {'prediction': list(predictions['prediction_label'])}
+    value_predic = predictions["prediction_label"].iloc[0]
+    if (value_predic > 0.5):
+        return f'Released Yes { value_predic }'
+    else:
+        return f'Released No { value_predic }'
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='127.0.0.1', port=8001)
+    uvicorn.run(app, host='127.0.0.1', port=8002)
